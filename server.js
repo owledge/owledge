@@ -68,6 +68,41 @@ app.post('/api/user', (req, res) => {
   })
 })
 
+// Post card
+app.post('/api/card', (req, res) => {
+  var post_body = req.body
+  connection.query("INSERT into flashcard (question, answer, creation_date, likes) VALUES ('" + post_body.question + "','" +
+        post_body.answer + "','" + post_body.creation_date + "','" + post_body.likes + "')", function (err, data) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+
+// Put card
+app.put('/api/card/:id', (req, res) => {
+  var post_body = req.body
+  connection.query('UPDATE flashcard ' + "SET question = '" + post_body.question + "'," + "answer ='" + post_body.answer + "' WHERE user_id = ?", [req.params.id], function (err, data) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+
+// Get all users
+app.get('/api/users', (req, res) => {
+  connection.query('SELECT * FROM User', (err, rows, fields) => {
+    if (!err)
+      res.send(rows);
+    else
+      console.log('err');
+  })
+})
+
 /*
 //Get all users
 app.get('/users',(req,res)=>{
