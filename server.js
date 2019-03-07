@@ -93,6 +93,33 @@ app.put('/api/card/:id', (req, res) => {
   })
 })
 
+// Post tag
+app.post('/api/tags', (req, res) => {
+  var post_body = req.body
+  connection.query("INSERT into Tag (tag_name, tag_color, tag_icon) VALUES ('" + post_body.tag_name + "','" +
+        post_body.tag_color + "','" + post_body.tag_icon + "')", function (err, data) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+
+// Put tag
+app.put('/api/tag/:id', (req, res) => {
+  var post_body = req.body
+  connection.query('UPDATE Tag ' + "SET tag_name = '" + post_body.tag_name + "'," + "tag_color ='" + post_body.tag_color + "'," + "tag_icon ='" +
+  post_body.tag_icon + "' WHERE tag_id = ?", [req.params.id], function (err, data) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+
+/*
 // Get all users
 app.get('/api/users', (req, res) => {
   connection.query('SELECT * FROM User', (err, rows, fields) => {
@@ -103,7 +130,6 @@ app.get('/api/users', (req, res) => {
   })
 })
 
-/*
 //Get all users
 app.get('/users',(req,res)=>{
     connection.query('SELECT * FROM user',(err,rows,fields)=>{
