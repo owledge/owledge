@@ -2,6 +2,7 @@ var express = require('express')
 var mysql = require('mysql')
 var bodyParser = require('body-parser')
 var app = express()
+const basicAuth = require('express-basic-auth')
 
 if (process.env.JAWSDB_URL) {
   var connection = mysql.createConnection(process.env.JAWSDB_URL)
@@ -25,6 +26,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.listen(3000, () => console.log('Port 3000'))
+
+app.use(basicAuth({
+  users: { 'admin': '123' }
+  // challenge: true
+}))
 
 // Post user
 app.post('/api/users', (req, res) => {
