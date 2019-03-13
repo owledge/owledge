@@ -2,6 +2,7 @@ var express = require('express')
 var mysql = require('mysql')
 var bodyParser = require('body-parser')
 var app = express()
+var jwt = require('jsonwebtoken')
 const basicAuth = require('express-basic-auth')
 
 if (process.env.JAWSDB_URL) {
@@ -35,9 +36,10 @@ app.use(basicAuth({
 // Post user
 app.post('/api/users', (req, res) => {
   var post_body = req.body
+  var token = jwt.sign({ foo: post_body.pword }, 'shhhhh')
   connection.query("INSERT into User (uname, fname, lname, pword, gender, email, regdate, country, language) VALUES ('" + post_body.uname + "','" +
-        post_body.fname + "','" + post_body.lname + "','" + post_body.pword + "','" + post_body.gender + "','" +
-        post_body.email + "','" + post_body.regdate + "','" + post_body.country + "','" + post_body.language + "')", function (err, data) {
+         post_body.fname + "','" + post_body.lname + "','" + token + "','" + post_body.gender + "','" +
+         post_body.email + "','" + post_body.regdate + "','" + post_body.country + "','" + post_body.language + "')", function (err, data) {
     if (err) {
       res.send(err)
     } else {
@@ -63,13 +65,14 @@ app.put('/api/user/:id', (req, res) => {
 // Post login
 app.post('/api/user', (req, res) => {
   var post_body = req.body
-  connection.query("SELECT * FROM User WHERE email='" + post_body.email + "' and pword='" + post_body.pword + "'", function (err, data) {
+  connection.query("SELECT * FROM User where email='" + post_body.email + "' and pword='" + post_body.pword + "'", function (err, data) {
     if (err) {
       res.send(err)
       throw err
     } else {
-      res.send(data)
-      console.log('Welcome')
+      var decoded = jwt.verify(data.pword, 'shhhhh')
+      res.send(decoded)
+      console.log('welcome')
     }
   })
 })
