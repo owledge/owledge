@@ -23,6 +23,8 @@ class Register extends React.Component {
     render() {
         const { validated } = this.state;
         return (
+            <div className="container">
+                <div className="row justify-content-md-center">
             <Form
                 noValidate
                 validated={validated}
@@ -70,9 +72,12 @@ class Register extends React.Component {
                 </Form.Group>
                 <Button type="submit" variant="danger" className="Basic-button" >Enviar</Button>
             </Form>
+                </div>
+            </div>
         );
     }
 }
 
 
 export default Register;
+
