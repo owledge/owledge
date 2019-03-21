@@ -102,6 +102,13 @@ app.put('/api/card/:id', (req, res) => {
   })
 })
 
+// Get flascard por id
+app.get('/api/flashcard/:id', (req, res) => {
+  connection.query('SELECT * FROM flashcard WHERE flashcard_id = ?', [req.params.id], (err, rows, fields) => {
+    if (!err) { res.send(rows) } else { console.log('err') }
+  })
+})
+
 // Post tag
 app.post('/api/tags', (req, res) => {
   var post_body = req.body
@@ -125,6 +132,20 @@ app.put('/api/tag/:id', (req, res) => {
     } else {
       res.send(data)
     }
+  })
+})
+
+// Get tag por id
+app.get('/api/tag/id/:id', (req, res) => {
+  connection.query('SELECT * FROM tag WHERE tag_id = ?', [req.params.id], (err, rows, fields) => {
+    if (!err) { res.send(rows) } else { console.log('err') }
+  })
+})
+
+// Get tag por nombre
+app.get('/api/tag/name/:name', (req, res) => {
+  connection.query('SELECT * FROM tag WHERE tag_name = ?', [req.params.name], (err, rows, fields) => {
+    if (!err) { res.send(rows) } else { console.log('err') }
   })
 })
 
