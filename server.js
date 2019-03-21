@@ -80,7 +80,7 @@ app.post('/api/user', (req, res) => {
 // Post card
 app.post('/api/card', (req, res) => {
   var post_body = req.body
-  connection.query("INSERT into flashcard (question, answer, creation_date, likes) VALUES ('" + post_body.question + "','" +
+  connection.query("INSERT into Flashcard (question, answer, creation_date, likes) VALUES ('" + post_body.question + "','" +
         post_body.answer + "','" + post_body.creation_date + "','" + post_body.likes + "')", function (err, data) {
     if (err) {
       res.send(err)
@@ -93,7 +93,7 @@ app.post('/api/card', (req, res) => {
 // Put card
 app.put('/api/card/:id', (req, res) => {
   var post_body = req.body
-  connection.query('UPDATE flashcard ' + "SET question = '" + post_body.question + "'," + "answer ='" + post_body.answer + "' WHERE user_id = ?", [req.params.id], function (err, data) {
+  connection.query('UPDATE Flashcard ' + "SET question = '" + post_body.question + "'," + "answer ='" + post_body.answer + "' WHERE user_id = ?", [req.params.id], function (err, data) {
     if (err) {
       res.send(err)
     } else {
@@ -104,7 +104,7 @@ app.put('/api/card/:id', (req, res) => {
 
 // Get flascard por id
 app.get('/api/flashcard/:id', (req, res) => {
-  connection.query('SELECT * FROM flashcard WHERE flashcard_id = ?', [req.params.id], (err, rows, fields) => {
+  connection.query('SELECT * FROM Flashcard WHERE flashcard_id = ?', [req.params.id], (err, rows, fields) => {
     if (!err) { res.send(rows) } else { console.log('err') }
   })
 })
@@ -137,14 +137,14 @@ app.put('/api/tag/:id', (req, res) => {
 
 // Get tag por id
 app.get('/api/tag/id/:id', (req, res) => {
-  connection.query('SELECT * FROM tag WHERE tag_id = ?', [req.params.id], (err, rows, fields) => {
+  connection.query('SELECT * FROM Tag WHERE tag_id = ?', [req.params.id], (err, rows, fields) => {
     if (!err) { res.send(rows) } else { console.log('err') }
   })
 })
 
 // Get tag por nombre
 app.get('/api/tag/name/:name', (req, res) => {
-  connection.query('SELECT * FROM tag WHERE tag_name = ?', [req.params.name], (err, rows, fields) => {
+  connection.query('SELECT * FROM Tag WHERE tag_name = ?', [req.params.name], (err, rows, fields) => {
     if (!err) { res.send(rows) } else { console.log('err') }
   })
 })
