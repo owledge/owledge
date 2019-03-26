@@ -80,8 +80,8 @@ app.post('/api/user', (req, res) => {
 // Post card
 app.post('/api/card', (req, res) => {
   var post_body = req.body
-  connection.query("INSERT into Flashcard (question, answer, creation_date, likes) VALUES ('" + post_body.question + "','" +
-        post_body.answer + "','" + post_body.creation_date + "','" + post_body.likes + "')", function (err, data) {
+  connection.query("INSERT into Flashcard (question, answer, creation_date, dislikes, share) VALUES ('" + post_body.question + "','" +
+        post_body.answer + "','" + post_body.creation_date + "','" + post_body.dislikes + "','" + post_body.share + "')", function (err, data) {
     if (err) {
       res.send(err)
     } else {
