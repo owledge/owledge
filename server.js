@@ -36,9 +36,9 @@ app.use(basicAuth({
 // Post user
 app.post('/api/users', (req, res) => {
   var post_body = req.body
-  var token = jwt.sign({ foo: post_body.pword }, 'shhhhh')
+  //var token = jwt.sign({ foo: post_body.pword }, 'shhhhh')
   connection.query("INSERT into User (uname, fname, lname, pword, gender, email, regdate, country, language) VALUES ('" + post_body.uname + "','" +
-         post_body.fname + "','" + post_body.lname + "','" + token + "','" + post_body.gender + "','" +
+         post_body.fname + "','" + post_body.lname + "','" + post_body.pword + "','" + post_body.gender + "','" +
          post_body.email + "','" + post_body.regdate + "','" + post_body.country + "','" + post_body.language + "')", function (err, data) {
     if (err) {
       res.send(err)
@@ -70,8 +70,8 @@ app.post('/api/user', (req, res) => {
       res.send(err)
       throw err
     } else {
-      var decoded = jwt.verify(data.pword, 'shhhhh')
-      res.send(decoded)
+      //var decoded = jwt.verify(data.pword, 'shhhhh')
+      res.send(data)
       console.log('welcome')
     }
   })
