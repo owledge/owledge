@@ -29,8 +29,8 @@ app.use(bodyParser.json())
 app.listen(3000, () => console.log('Port 3000'))
 
 app.use(basicAuth({
-  users: { 'admin': '123' }
-  // challenge: true
+  users: { 'admin': '123' },
+  challenge: true
 }))
 
 // Post user
