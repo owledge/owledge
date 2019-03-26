@@ -1,17 +1,15 @@
 var express = require('express')
 var mysql = require('mysql')
 var bodyParser = require('body-parser')
+var AppConfig = require('./enviroments/enviroment.dev.js')
 var app = express()
 
-if (process.env.JAWSDB_URL) {
-  var connection = mysql.createConnection(process.env.JAWSDB_URL)
-} else {
-  var connection = mysql.createConnection({
-    host: 'q57yawiwmnaw13d2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-    user: 'gw7y2z8truum5ibn',
-    password: 'yrwq4ilwo2wacg6s',
-    database: 'y56jusgc306i54ry'
-  })
+if(!AppConfig.production) {
+  var connection = mysql.createConnection(AppConfig.URL)
+}
+
+if (process.env.NODE_ENV === 'production') {
+  connection = mysql.createConnection(process.env.JAWSDB_URL)
 }
 
 connection.connect((err) => {
