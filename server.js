@@ -1,19 +1,17 @@
 var express = require('express')
 var mysql = require('mysql')
 var bodyParser = require('body-parser')
+var AppConfig = require('./enviroments/enviroment.dev.js')
 var app = express()
 var jwt = require('jsonwebtoken')
 const basicAuth = require('express-basic-auth')
 
-if (process.env.JAWSDB_URL) {
-  var connection = mysql.createConnection(process.env.JAWSDB_URL)
-} else {
-  var connection = mysql.createConnection({
-    host: 'q57yawiwmnaw13d2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-    user: 'gw7y2z8truum5ibn',
-    password: 'yrwq4ilwo2wacg6s',
-    database: 'y56jusgc306i54ry'
-  })
+if(!AppConfig.production) {
+  var connection = mysql.createConnection(AppConfig.URL)
+}
+
+if (process.env.NODE_ENV === 'production') {
+  connection = mysql.createConnection(process.env.JAWSDB_URL)
 }
 
 connection.connect((err) => {
@@ -48,8 +46,19 @@ app.post('/api/users', (req, res) => {
   })
 })
 
+//Get user
+app.get('/api/users/:id',(req,res)=>{
+  connection.query("SELECT * FROM User WHERE user_id = ?",[req.params.id],(err,result)=>{
+   if(!err) {
+   res.send(result);
+  }
+   else
+   res.send(err);
+  })
+});
+
 // Put user
-app.put('/api/user/:id', (req, res) => {
+app.put('/api/users/:id', (req, res) => {
   var post_body = req.body
   connection.query('UPDATE User ' + "SET uname = '" + post_body.uname + "'," + "fname ='" + post_body.fname + "'," + "lname ='" + post_body.lname +
         "'," + "pword ='" + post_body.pword + "'," + "gender ='" + post_body.gender + "'," + "email ='" + post_body.email + "'," + "country ='" + post_body.country +
@@ -63,7 +72,8 @@ app.put('/api/user/:id', (req, res) => {
 })
 
 // Post login
-app.post('/api/user', (req, res) => {
+app.post('/api/users/login', (req, res) => {
+  console.log(res);
   var post_body = req.body
   connection.query("SELECT * FROM User where email='" + post_body.email + "' and pword='" + post_body.pword + "'", function (err, data) {
     if (err) {
@@ -155,7 +165,7 @@ app.get('/api/tag/name/:name', (req, res) => {
   })
 })
 
-/*
+
 // Get all users
 app.get('/api/users', (req, res) => {
   connection.query('SELECT * FROM User', (err, rows, fields) => {
@@ -165,7 +175,7 @@ app.get('/api/users', (req, res) => {
       console.log('err');
   })
 })
-
+/*
 //Get all users
 app.get('/users',(req,res)=>{
     connection.query('SELECT * FROM user',(err,rows,fields)=>{
