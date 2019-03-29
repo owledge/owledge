@@ -78,7 +78,6 @@ app.post('/api/users/login', (req, res) => {
   connection.query("SELECT * FROM User where email='" + post_body.email + "' and pword='" + post_body.pword + "'", function (err, data) {
     if (err) {
       res.send(err)
-      throw err
     } else {
       //var decoded = jwt.verify(data.pword, 'shhhhh')
       res.send(data)
