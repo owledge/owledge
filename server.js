@@ -111,6 +111,12 @@ app.put('/api/card/:id', (req, res) => {
     }
   })
 })
+// if(!dev) {
+//     app.disable('x-powered-by');
+//     app.use(compression());
+//     app.use(morgan('common'));
+
+//     app.use(express.static(path.resolve(__dirname, 'build')));
 
 // Get flascard por id
 app.get('/api/flashcard/:id', (req, res) => {
@@ -178,16 +184,15 @@ app.get('/users',(req,res)=>{
      else
      console.log('err');
     })
+}
 
+if(dev){
+    app.use(morgan('dev'));
+}
+
+const server = createServer(app);
+
+server.listen(PORT, err => {
+    if(err) throw err;
+    console.log('Server started');
 });
-
-
-//Delete an user
-app.delete('/users/:id',(req,res)=>{
-    connection.query('DELETE FROM user WHERE user_id = ?',[req.params.id],(err,rows,fields)=>{
-     if(!err)
-     res.send('DELETED successfully');
-     else
-     console.log('err');
-    })
-}); */
