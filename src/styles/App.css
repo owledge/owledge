@@ -1,0 +1,58 @@
+/*Fuentes*/
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bolder;
+    font-size: 4vw;
+}
+
+h2,
+h3 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    font-size: 3vw;
+}
+
+p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 2vw;
+}
+
+
+/*General*/
+
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 40vmin;
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+
+/*Form*/
+
+.Basic-button {
+    background-color: #691214;
+    font-family: 'Open Sans', sans-serif;
+    border-color: #f5ae1e;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
