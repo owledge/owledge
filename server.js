@@ -46,8 +46,19 @@ app.post('/api/users', (req, res) => {
   })
 })
 
+//Get user
+app.get('/api/users/:id',(req,res)=>{
+  connection.query("SELECT * FROM User WHERE user_id = ?",[req.params.id],(err,result)=>{
+   if(!err) {
+   res.send(result);
+  }
+   else
+   res.send(err);
+  })
+});
+
 // Put user
-app.put('/api/user/:id', (req, res) => {
+app.put('/api/users/:id', (req, res) => {
   var post_body = req.body
   connection.query('UPDATE User ' + "SET uname = '" + post_body.uname + "'," + "fname ='" + post_body.fname + "'," + "lname ='" + post_body.lname +
         "'," + "pword ='" + post_body.pword + "'," + "gender ='" + post_body.gender + "'," + "email ='" + post_body.email + "'," + "country ='" + post_body.country +
@@ -61,7 +72,8 @@ app.put('/api/user/:id', (req, res) => {
 })
 
 // Post login
-app.post('/api/user', (req, res) => {
+app.post('/api/users/login', (req, res) => {
+  console.log(res);
   var post_body = req.body
   connection.query("SELECT * FROM User where email='" + post_body.email + "' and pword='" + post_body.pword + "'", function (err, data) {
     if (err) {
@@ -147,7 +159,7 @@ app.get('/api/tag/name/:name', (req, res) => {
   })
 })
 
-/*
+
 // Get all users
 app.get('/api/users', (req, res) => {
   connection.query('SELECT * FROM User', (err, rows, fields) => {
@@ -157,7 +169,7 @@ app.get('/api/users', (req, res) => {
       console.log('err');
   })
 })
-
+/*
 //Get all users
 app.get('/users',(req,res)=>{
     connection.query('SELECT * FROM user',(err,rows,fields)=>{
@@ -169,15 +181,6 @@ app.get('/users',(req,res)=>{
 
 });
 
-//Get an user
-app.get('/users/:id',(req,res)=>{
-    connection.query('SELECT * FROM user WHERE user_id = ?',[req.params.id],(err,rows,fields)=>{
-     if(!err)
-     res.send(rows);
-     else
-     console.log('err');
-    })
-});
 
 //Delete an user
 app.delete('/users/:id',(req,res)=>{
