@@ -174,24 +174,3 @@ app.get('/api/users', (req, res) => {
       console.log('err');
   })
 })
-/*
-//Get all users
-app.get('/users',(req,res)=>{
-    connection.query('SELECT * FROM user',(err,rows,fields)=>{
-     if(!err)
-     res.send(rows);
-     else
-     console.log('err');
-    })
-}
-
-if(dev){
-    app.use(morgan('dev'));
-}
-
-const server = createServer(app);
-
-server.listen(PORT, err => {
-    if(err) throw err;
-    console.log('Server started');
-});
