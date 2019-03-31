@@ -14,6 +14,18 @@ if (process.env.NODE_ENV === 'production') {
   connection = mysql.createConnection(process.env.JAWSDB_URL)
 }
 
+if(!dev) {
+  app.disable('x-powered-by')
+  app.use(compression())
+  app.use(morgan('common'))
+
+  app.use(express.static(path.resolve(__dirname, 'build')))
+
+  app.get('*', (req, res) =>{
+      res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+  })
+}
+
 connection.connect((err) => {
   if (!err) { console.log('Db connection succedes.') } else { console.log('Db connection fail \n Error : ' + JSON.stringify(err, undefined, 2)) }
 })
@@ -110,12 +122,6 @@ app.put('/api/card/:id', (req, res) => {
     }
   })
 })
-// if(!dev) {
-//     app.disable('x-powered-by');
-//     app.use(compression());
-//     app.use(morgan('common'));
-
-//     app.use(express.static(path.resolve(__dirname, 'build')));
 
 // Get flascard por id
 app.get('/api/flashcard/:id', (req, res) => {
@@ -174,24 +180,3 @@ app.get('/api/users', (req, res) => {
       console.log('err');
   })
 })
-/*
-//Get all users
-app.get('/users',(req,res)=>{
-    connection.query('SELECT * FROM user',(err,rows,fields)=>{
-     if(!err)
-     res.send(rows);
-     else
-     console.log('err');
-    })
-}
-
-if(dev){
-    app.use(morgan('dev'));
-}
-
-const server = createServer(app);
-
-server.listen(PORT, err => {
-    if(err) throw err;
-    console.log('Server started');
-});
