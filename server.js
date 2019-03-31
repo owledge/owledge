@@ -1,4 +1,5 @@
 var express = require('express')
+const compression = require('compression');
 var mysql = require('mysql')
 var bodyParser = require('body-parser')
 var AppConfig = require('./enviroments/enviroment.dev.js')
