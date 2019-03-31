@@ -2,6 +2,7 @@ var express = require('express')
 const compression = require('compression')
 const morgan = require('morgan')
 var mysql = require('mysql')
+const path = require('path');
 var bodyParser = require('body-parser')
 var AppConfig = require('./enviroments/enviroment.dev.js')
 var app = express()
