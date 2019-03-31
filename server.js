@@ -5,6 +5,7 @@ var AppConfig = require('./enviroments/enviroment.dev.js')
 var app = express()
 var jwt = require('jsonwebtoken')
 const basicAuth = require('express-basic-auth')
+const dev = app.get('env') !== 'production'
 
 if(!AppConfig.production) {
   var connection = mysql.createConnection(AppConfig.URL)
@@ -24,6 +25,10 @@ if(!dev) {
   app.get('*', (req, res) =>{
       res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
   })
+}
+
+if(dev){
+  app.use(morgan('dev'))
 }
 
 connection.connect((err) => {
