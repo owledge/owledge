@@ -9,16 +9,14 @@ var app = express()
 var jwt = require('jsonwebtoken')
 const basicAuth = require('express-basic-auth')
 const dev = app.get('env') !== 'production'
+var connection
 
 if(!AppConfig.production) {
-  var connection = mysql.createConnection(AppConfig.URL)
+  connection = mysql.createConnection(AppConfig.URL)
 }
 
 if (process.env.NODE_ENV === 'production') {
   connection = mysql.createConnection(process.env.JAWSDB_URL)
-}
-
-if(!dev) {
   app.disable('x-powered-by')
   app.use(compression())
   app.use(morgan('common'))
@@ -44,7 +42,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.listen(3000, () => console.log('Port 3000'))
+app.listen((process.env.PORT || 3000), () => console.log('Port 3000'))
 
 app.use(basicAuth({
   users: { 'admin': '123' },
