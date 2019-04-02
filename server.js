@@ -134,7 +134,7 @@ app.post('/api/cards/assign', (req, res) => {
 // Get all user's flashcards
 app.get('/api/cards/assigned/:id', (req, res) => {
   var post_body = req.body
-  connection.query("SELECT FlashCard.* FROM FlashCard JOIN User_has_FlashCard ON FlashCard.flashcard_id = User_has_FlashCard.FlashCard_id WHERE User_has_FlashCard.User_id = ?",[req.params.id], function (err, data) {
+  connection.query("SELECT FlashCard.*, User_has_FlashCard.has_disliked FROM FlashCard JOIN User_has_FlashCard ON FlashCard.flashcard_id = User_has_FlashCard.FlashCard_id WHERE User_has_FlashCard.User_id = ?",[req.params.id], function (err, data) {
     if (err) {
       res.send(err)
     } else {
@@ -146,7 +146,7 @@ app.get('/api/cards/assigned/:id', (req, res) => {
 // Get all user's owned flashcards
 app.get('/api/cards/owned/:id', (req, res) => {
   var post_body = req.body
-  connection.query("SELECT FlashCard.* FROM FlashCard JOIN User_has_FlashCard ON FlashCard.flashcard_id = User_has_FlashCard.FlashCard_id WHERE FlashCard.owner_id = ?",[req.params.id], function (err, data) {
+  connection.query("SELECT FlashCard.*, User_has_FlashCard.has_disliked FROM FlashCard JOIN User_has_FlashCard ON FlashCard.flashcard_id = User_has_FlashCard.FlashCard_id WHERE FlashCard.owner_id = ?",[req.params.id], function (err, data) {
     if (err) {
       res.send(err)
     } else {
