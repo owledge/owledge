@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'production') {
 
   app.use(express.static(path.resolve(__dirname, 'build')))
 
-  app.get('*', (req, res) =>{
+  app.get('/', (req, res) =>{
       res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
   })
 }
@@ -104,11 +104,49 @@ app.post('/api/users/login', (req, res) => {
   })
 })
 
+
 // Post card
-app.post('/api/card', (req, res) => {
+app.post('/api/cards/', (req, res) => {
   var post_body = req.body
-  connection.query("INSERT into Flashcard (question, answer, creation_date, dislikes, share) VALUES ('" + post_body.question + "','" +
-        post_body.answer + "','" + post_body.creation_date + "','" + post_body.dislikes + "','" + post_body.share + "')", function (err, data) {
+  connection.query("INSERT into FlashCard (question, answer, creation_date, share, owner_id) VALUES ('" + post_body.question + "','" +
+        post_body.answer + "','" + post_body.creation_date + "','" + post_body.owner_id + "')", function (err, data) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+
+// Asign flashcard to user
+app.post('/api/cards/assign', (req, res) => {
+  var post_body = req.body
+  connection.query("INSERT INTO User_has_FlashCard VALUES ('" + post_body.user_id + "','" +
+        post_body.flashcard_id + "')", function (err, data) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+
+// Get all user's flashcards
+app.get('/api/cards/assigned/:id', (req, res) => {
+  var post_body = req.body
+  connection.query("SELECT FlashCard.* FROM FlashCard JOIN User_has_FlashCard ON FlashCard.flashcard_id = User_has_FlashCard.FlashCard_id WHERE User_has_FlashCard.User_id = ?",[req.params.id], function (err, data) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+
+// Get all user's owned flashcards
+app.get('/api/cards/owned/:id', (req, res) => {
+  var post_body = req.body
+  connection.query("SELECT FlashCard.* FROM FlashCard JOIN User_has_FlashCard ON FlashCard.flashcard_id = User_has_FlashCard.FlashCard_id WHERE FlashCard.owner_id = ?",[req.params.id], function (err, data) {
     if (err) {
       res.send(err)
     } else {
@@ -118,7 +156,7 @@ app.post('/api/card', (req, res) => {
 })
 
 // Put card
-app.put('/api/card/:id', (req, res) => {
+app.put('/api/cards/:id', (req, res) => {
   var post_body = req.body
   connection.query('UPDATE Flashcard ' + "SET question = '" + post_body.question + "'," + "answer ='" + post_body.answer + "' WHERE user_id = ?", [req.params.id], function (err, data) {
     if (err) {
@@ -130,14 +168,14 @@ app.put('/api/card/:id', (req, res) => {
 })
 
 // Get flascard por id
-app.get('/api/flashcard/:id', (req, res) => {
-  connection.query('SELECT * FROM Flashcard WHERE flashcard_id = ?', [req.params.id], (err, rows, fields) => {
-    if (!err) { res.send(rows) } else { console.log('err') }
+app.get('/api/flashcards/:id', (req, res) => {
+  connection.query('SELECT * FROM FlashCard WHERE flashcard_id = ?', [req.params.id], (err, rows, fields) => {
+    if (!err) { res.send(rows) } else { console.log(err) }
   })
 })
 
 // Post tag
-app.post('/api/tags', (req, res) => {
+app.post('/api/tags/', (req, res) => {
   var post_body = req.body
   connection.query("INSERT into Tag (tag_name, tag_color, tag_icon) VALUES ('" + post_body.tag_name + "','" +
         post_body.tag_color + "','" + post_body.tag_icon + "')", function (err, data) {
@@ -150,7 +188,7 @@ app.post('/api/tags', (req, res) => {
 })
 
 // Put tag
-app.put('/api/tag/:id', (req, res) => {
+app.put('/api/tags/:id', (req, res) => {
   var post_body = req.body
   connection.query('UPDATE Tag ' + "SET tag_name = '" + post_body.tag_name + "'," + "tag_color ='" + post_body.tag_color + "'," + "tag_icon ='" +
   post_body.tag_icon + "' WHERE tag_id = ?", [req.params.id], function (err, data) {
@@ -163,14 +201,14 @@ app.put('/api/tag/:id', (req, res) => {
 })
 
 // Get tag por id
-app.get('/api/tag/id/:id', (req, res) => {
+app.get('/api/tags/id/:id', (req, res) => {
   connection.query('SELECT * FROM Tag WHERE tag_id = ?', [req.params.id], (err, rows, fields) => {
     if (!err) { res.send(rows) } else { console.log('err') }
   })
 })
 
 // Get tag por nombre
-app.get('/api/tag/name/:name', (req, res) => {
+app.get('/api/tags/name/:name', (req, res) => {
   connection.query('SELECT * FROM Tag WHERE tag_name = ?', [req.params.name], (err, rows, fields) => {
     if (!err) { res.send(rows) } else { console.log('err') }
   })
