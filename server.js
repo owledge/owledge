@@ -106,10 +106,10 @@ app.post('/api/users/login', (req, res) => {
 
 
 // Post card
-app.post('/api/cards/', (req, res) => {
+app.post('/api/cards/:userId', (req, res) => {
   var post_body = req.body
-  connection.query("INSERT into FlashCard (question, answer, creation_date, share, owner_id) VALUES ('" + post_body.question + "','" +
-        post_body.answer + "','" + post_body.creation_date + "','" + post_body.owner_id + "')", function (err, data) {
+  connection.query("INSERT into FlashCard (question, answer, creation_date, owner_id) VALUES ('" + post_body.question + "','" +
+        post_body.answer + "','" + post_body.creation_date + "','" + (+req.params.userId) + "')", function (err, data) {
     if (err) {
       res.send(err)
     } else {
