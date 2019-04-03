@@ -119,10 +119,9 @@ app.post('/api/cards/', (req, res) => {
 })
 
 // Asign flashcard to user
-app.post('/api/cards/assign', (req, res) => {
+app.put('/api/cards/:userId/assign/:flashcardId', (req, res) => {
   var post_body = req.body
-  connection.query("INSERT INTO User_has_FlashCard VALUES ('" + post_body.user_id + "','" +
-        post_body.flashcard_id + "')", function (err, data) {
+  connection.query("INSERT INTO User_has_FlashCard(User_id,FlashCard_id) VALUES (?, ?)",[+req.params.userId, +req.params.flashcardId], function (err, data) {
     if (err) {
       res.send(err)
     } else {
