@@ -109,7 +109,20 @@ app.post('/api/users/login', (req, res) => {
 app.post('/api/cards/:userId', (req, res) => {
   var post_body = req.body
   connection.query("INSERT into FlashCard (question, answer, creation_date, owner_id) VALUES ('" + post_body.question + "','" +
-        post_body.answer + "','" + post_body.creation_date + "','" + (+req.params.userId) + "')", function (err, data) {
+        post_body.answer + "','" + new Date().toISOString() + "','" + (+req.params.userId) + "')", function (err, data) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+
+// Post Dislike
+app.post('/api/cards/:userId', (req, res) => {
+  var post_body = req.body
+  connection.query("INSERT into FlashCard (question, answer, creation_date, owner_id) VALUES ('" + post_body.question + "','" +
+        post_body.answer + "','" + formatDate() + "','" + (+req.params.userId) + "')", function (err, data) {
     if (err) {
       res.send(err)
     } else {
@@ -154,10 +167,10 @@ app.get('/api/cards/owned/:id', (req, res) => {
   })
 })
 
-// Put card
-app.put('/api/cards/:id', (req, res) => {
+// Update card card
+app.put('/api/cards/update/:userId&:flashcardId', (req, res) => {
   var post_body = req.body
-  connection.query('UPDATE Flashcard ' + "SET question = '" + post_body.question + "'," + "answer ='" + post_body.answer + "' WHERE user_id = ?", [req.params.id], function (err, data) {
+  connection.query('UPDATE FlashCard ' + "SET question = '" + post_body.question + "'," + "answer ='" + post_body.answer + "' WHERE owner_id = ? AND flashcard_id = ?", [req.params.userId,req.params.flashcardId], function (err, data) {
     if (err) {
       res.send(err)
     } else {
@@ -223,3 +236,15 @@ app.get('/api/users', (req, res) => {
       console.log('err');
   })
 })
+
+function formatDate() {
+  var d = new Date(),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
+
+  return [year, month, day].join('-');
+}
