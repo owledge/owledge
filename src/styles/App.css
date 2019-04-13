@@ -46,6 +46,10 @@ p {
     color: #61dafb;
 }
 
+/* Header Logo */
+.Header img {
+    width: 100px;
+}
 
 /*Form*/
 
