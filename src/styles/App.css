@@ -60,3 +60,12 @@ p {
     margin-top: 3px;
     margin-bottom: 3px;
 }
+
+.welcomePage {
+    height: 500px;
+}
+
+.welcomePage > div {
+    margin-top: auto;
+    margin-bottom: auto;
+}
