@@ -32,6 +32,17 @@ if(dev){
   app.use(morgan('dev'))
 }
 
+if (process.env.JAWSDB_URL) {
+  var connection = mysql.createConnection(process.env.JAWSDB_URL)
+} else {
+  var connection = mysql.createConnection({
+    host: 'q57yawiwmnaw13d2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    user: 'gw7y2z8truum5ibn',
+    password: 'yrwq4ilwo2wacg6s',
+    database: 'y56jusgc306i54ry'
+  })
+}
+
 connection.connect((err) => {
   if (!err) { console.log('Db connection succedes.') } else { console.log('Db connection fail \n Error : ' + JSON.stringify(err, undefined, 2)) }
 })
