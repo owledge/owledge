@@ -327,3 +327,21 @@ function formatDate() {
 
   return [year, month, day].join("-");
 }
+// Get all users
+app.get('/api/users', (req, res) => {
+  connection.query('SELECT * FROM User', (err, rows, fields) => {
+    if (!err)
+      res.send(rows);
+    else
+      console.log('err');
+  })
+})
+
+app.get('/api/flashcard', (req, res) => {
+  connection.query('SELECT * FROM FlashCard', (err, rows, fields) => {
+    if (!err)
+      res.send(rows);
+    else
+      console.log('err');
+  })
+})
