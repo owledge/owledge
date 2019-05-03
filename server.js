@@ -197,3 +197,12 @@ app.get('/api/users', (req, res) => {
       console.log('err');
   })
 })
+
+app.get('/api/flashcard', (req, res) => {
+  connection.query('SELECT * FROM FlashCard', (err, rows, fields) => {
+    if (!err)
+      res.send(rows);
+    else
+      console.log('err');
+  })
+})
