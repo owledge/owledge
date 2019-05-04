@@ -259,8 +259,8 @@ app.get("/api/cards/assigned/:id", (req, res) => {
 app.get("/api/cards/owned/:id", (req, res) => {
   var post_body = req.body;
   connection.query(
-    "SELECT FlashCard.*, User_has_FlashCard.has_disliked FROM FlashCard JOIN User_has_FlashCard ON FlashCard.flashcard_id = User_has_FlashCard.FlashCard_id WHERE FlashCard.owner_id = ?",
-    [req.params.id],
+    "SELECT FlashCard.*, User_has_FlashCard.has_disliked FROM FlashCard JOIN User_has_FlashCard ON FlashCard.flashcard_id = User_has_FlashCard.FlashCard_id AND User_has_FlashCard.User_id = ? WHERE FlashCard.owner_id = ?",
+    [req.params.id, req.params.id],
     function (err, data) {
       if (err) {
         res.send(err);
