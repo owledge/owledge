@@ -19,7 +19,6 @@ p {
     font-size: 2vw;
 }
 
-
 /*General*/
 
 .App {
@@ -83,4 +82,32 @@ p {
 .welcomePage > div {
     margin-top: auto;
     margin-bottom: auto;
+}
+
+.Login{
+    background-color: #691214;
+    color: aliceblue;
+}
+
+.col-lg-6{
+    border: solid 2px;
+    border-color: #cccccc;
+    background-color: #cccccc;
+}
+
+.Login .Logo img {
+    width: 200px;
+    height: 200px;
+}
+
+.Login form {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.logtext{
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1vw;
+    color: aliceblue;
 }

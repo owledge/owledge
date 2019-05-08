@@ -5,7 +5,7 @@ class Logo extends Component {
     render() {
         return (
             <div className="Logo">
-                <img src={require("../res/logo.png")} alt="Owledge Logo" className="img-responsive" height="auto" width="auto" />
+                <img src={require("../res/logo.png")} alt="Owledge Logo" className="img-responsive" />
             </div>
         );
     }
