@@ -74,7 +74,7 @@ p {
 }
 
 .welcomePage {
-    height: 500px;
+    height: 470px;
     background-color: #691214;
     color: aliceblue;
 }
@@ -87,6 +87,7 @@ p {
 .Login{
     background-color: #691214;
     color: aliceblue;
+    height: 480px;
 }
 
 .col-lg-6{
@@ -108,6 +109,6 @@ p {
 .logtext{
     text-align: center;
     font-family: 'Open Sans', sans-serif;
-    font-size: 1vw;
+    font-size: 1.3vw;
     color: aliceblue;
 }
