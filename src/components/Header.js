@@ -10,11 +10,11 @@ class Header extends Component {
   render() {
     return (
       <header className="Header">
-        <Navbar bg="secondary" expand="lg">
+        <Navbar expand="lg">
           <Navbar.Brand href="#home"><Logo /></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ml-auto">
+            <Nav className="ml-auto">  
               <Nav.Link href="#home">Iniciar sesión</Nav.Link>
               <Nav.Link href="#link">Crear cuenta</Nav.Link>
             </Nav>
