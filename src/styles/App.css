@@ -94,6 +94,7 @@ p {
     border: solid 2px;
     border-color: #cccccc;
     background-color: #cccccc;
+    border-radius: 10px;
 }
 
 .Login .Logo img {
