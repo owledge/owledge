@@ -1,6 +1,7 @@
 var express = require("express");
 const compression = require("compression");
 const util = require('util');
+var cors = require("cors");
 const morgan = require("morgan");
 var mysql = require("mysql");
 const path = require("path");
@@ -11,6 +12,8 @@ var jwt = require("jsonwebtoken");
 const basicAuth = require("express-basic-auth");
 const dev = app.get("env") !== "production";
 var connection;
+
+app.use(cors());
 
 if (!AppConfig.production) {
   connection = mysql.createConnection(AppConfig.URL);
