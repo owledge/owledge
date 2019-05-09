@@ -23,6 +23,7 @@ p {
 
 .App {
     text-align: center;
+    background-color: #691214;
 }
 
 .App-logo {
@@ -75,7 +76,6 @@ p {
 
 .welcomePage {
     height: 470px;
-    background-color: #691214;
     color: aliceblue;
 }
 
@@ -85,7 +85,6 @@ p {
 }
 
 .Login{
-    background-color: #691214;
     color: aliceblue;
     height: 480px;
 }
@@ -112,4 +111,19 @@ p {
     font-family: 'Open Sans', sans-serif;
     font-size: 1.3vw;
     color: aliceblue;
+}
+
+.regcontain{
+    height: 470px;
+}
+
+.regform{
+    border: solid 2px;
+    border-color: #cccccc;
+    background-color: #cccccc;
+    border-radius: 10px;
+}
+
+.formjump{
+    padding-top: 20px;
 }

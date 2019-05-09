@@ -23,13 +23,14 @@ class Register extends React.Component {
     render() {
         const { validated } = this.state;
         return (
-            <div className="container">
-                <div className="row justify-content-md-center">
+            <div className="container regcontain">
+                <div className="row justify-content-md-center formjump">
             <Form
                 noValidate
                 validated={validated}
                 onSubmit={e => this.handleSubmit(e)}
-            >
+                className="regform"
+                >
                 <Form.Row className="col-md-12">
                     <Form.Group as={Col} md="6" controlId="validationCustom01">
                         <Form.Label>Nombre</Form.Label>
@@ -37,7 +38,6 @@ class Register extends React.Component {
                             required
                             type="text"
                             placeholder="First name"
-                            defaultValue="Juan"
                         />
                         <Form.Control.Feedback>¡Luce bien!</Form.Control.Feedback>
                     </Form.Group>
@@ -47,7 +47,6 @@ class Register extends React.Component {
                             required
                             type="text"
                             placeholder="Apellido"
-                            defaultValue="Almaraz"
                         />
                         <Form.Control.Feedback>¡Luce bien!</Form.Control.Feedback>
                     </Form.Group>
